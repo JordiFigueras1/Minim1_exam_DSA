@@ -65,6 +65,58 @@ public class JuegoVirtualService {
         this.tm.crearJuego(juego.getIDjuego(),juego.getDescripcionJuego(), juego.getNumNivel());
         return Response.status(201).entity(juego).build();
     }
+/*
+    @GET
+    @ApiOperation(value = "Proporciona lista de juegos", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = JuegoVirtual.class, responseContainer="List"),
+    })
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getNivel() {
 
+        List<Juego> listJ = this.tm.getListaJuegos();
+
+        GenericEntity<List<Juego>> entity = new GenericEntity<List<Juego>>(listJ) {};
+        return Response.status(201).entity(entity).build()  ;
+
+    }
+
+/*
+    @GET
+    @ApiOperation(value = "get nivel actual", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+    })
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getNivelActual(@PathParam("id") String id) throws Exception {
+        tm.consultaNivelActual(id);
+        return Response.status(201).build()  ;
+    }
+
+    @GET
+    @ApiOperation(value = "get puntuación actual", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+    })
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response puntuacionActual (@PathParam("id") String id) throws Exception {
+        tm.consultaPuntuacionActual(id);
+        return Response.status(201).build()  ;
+    }
+
+    @GET
+    @ApiOperation(value = "get pasar de nivel", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+    })
+    @Path("/{id}/{puntos}/{fecha}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response pasarNivel (@PathParam("id") String id,@PathParam("puntos") int puntos, @PathParam("fecha") String fecha) {
+        tm.pasarNivel(id,puntos,fecha);
+        return Response.status(201).build();
+    }*/
 
 }

@@ -6,8 +6,10 @@ import java.util.List;
 public class Usuario {
     String idUsuario;
     List<Juego> listaJuegos;
-    boolean jugando;
+    public boolean jugando;
     String idJuegoActual;
+
+    String idPartidaActual;
     int puntosActuales;
     int nivelActual;
 
@@ -35,6 +37,14 @@ public class Usuario {
 
     public void setIdJuegoActual(String idJuegoActual) {
         this.idJuegoActual = idJuegoActual;
+    }
+
+    public String getIdPartidaActual() {
+        return idPartidaActual;
+    }
+
+    public void setIdPartidaActual(String idPartidaActual) {
+        this.idPartidaActual = idPartidaActual;
     }
 
 

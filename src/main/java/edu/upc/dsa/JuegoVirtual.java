@@ -18,7 +18,7 @@ public interface JuegoVirtual {
 
     public void addUsuario(String idUsuario);
     public void crearJuego(String idJuego, String descripcion, int numNiveles);
-    public Integer iniciarPartida(String idUsuario, String idJuego) throws Exception;
+    public Integer iniciarPartida(String idUsuario, String idJuego, String idPartida) throws Exception;
     public int consultaNivelActual(String idUsuario) throws Exception;
 
     public int consultaPuntuacionActual(String idUsuario) throws Exception;

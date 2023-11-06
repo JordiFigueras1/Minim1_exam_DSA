@@ -42,7 +42,7 @@ public class JuegoVirtualImpl implements JuegoVirtual{
         this.listaUsuarios.add(usuario);
     }
     @Override
-    public Integer iniciarPartida(String userId, String gameId) {
+    public Integer iniciarPartida(String userId, String gameId, String partidaId) {
         boolean userFound = false;
         boolean gameFound = false;
         int i = 0;
@@ -65,11 +65,14 @@ public class JuegoVirtualImpl implements JuegoVirtual{
             Usuario user = listaUsuarios.get(i);
             user.setJugando(true);
             user.setIdJuegoActual(gameId);
+            user.setIdPartidaActual(partidaId);
             user.setPuntosActuales(50);
             user.setNivelActual(1);
             Juego newGame = new Juego(gameId, listaJuegos.get(x).getDescripcionJuego(), listaJuegos.get(x).numNiveles);
             user.addListaJuegos(newGame);
             listaUsuarios.set(i, user);
+            Partida partida = new Partida(gameId, 1, 50, null, partidaId);
+            listaUsuarios.get(i).getListaJuegos().get(x).addListaPartidas(partida);
             return 0;
         } else if (!userFound) {
             return -1;
@@ -131,10 +134,11 @@ public class JuegoVirtualImpl implements JuegoVirtual{
                 i++;
             }
         }
-        if ((userFound) && listaUsuarios.get(i).isJugando()) {
+        if ((userFound) && listaUsuarios.get(i).jugando) {
             int level = listaUsuarios.get(i).getNivelActual();
             int points = listaUsuarios.get(i).getPuntosActuales() + pointsEarned;
             String currentGameId = listaUsuarios.get(i).getIdJuegoActual();
+            String currentPartidaId = listaUsuarios.get(i).getIdPartidaActual();
             Usuario user = listaUsuarios.get(i);
             boolean gameFound = false;
             int x = 0;
@@ -145,17 +149,26 @@ public class JuegoVirtualImpl implements JuegoVirtual{
                     x++;
                 }
             }
+            int m=0;
+            boolean partidaFound = false;
+            while ((!partidaFound) && (m < user.getListaJuegos().get(x).getListaPartidas().size())) {
+                if (Objects.equals(user.getListaJuegos().get(x).getListaPartidas().get(m).getIdPartida(), currentPartidaId)) {
+                    partidaFound = true;
+                } else {
+                    m++;
+                }
+            }
             if (gameFound) {
                 if (level == user.getListaJuegos().get(x).getNumNivel()) {
-                    Partida partida = new Partida(currentGameId, level, points + 100, date);
-                    user.getListaJuegos().get(x).addListaPartidas(partida);
+                    Partida partida = new Partida(currentGameId, level, points + 100, date, currentPartidaId);
+                    user.getListaJuegos().get(x).getListaPartidas().set(m, partida);
                     user.setJugando(false);
                     user.setPuntosActuales(points);
                     listaUsuarios.set(i, user);
                     return 1;
                 } else {
-                    Partida partida = new Partida(currentGameId, level, points, date);
-                    listaUsuarios.get(i).getListaJuegos().get(x).addListaPartidas(partida);
+                    Partida partida = new Partida(currentGameId, level, points, date, currentPartidaId);
+                    user.getListaJuegos().get(x).getListaPartidas().set(m, partida);
                     user.setNivelActual(level + 1);
                     user.setPuntosActuales(points);
                     listaUsuarios.set(i, user);
